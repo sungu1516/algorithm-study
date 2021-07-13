@@ -115,4 +115,46 @@ print("dir(data_str) => {0}".format(dir(data_str)))
 data_list = [10, 20, 30, 40, 50]
 print("dir(data_list) => {0}".format(dir(data_list)))
 
-#### 2) globals()
+#### 2) globals(), locals()
+def Myclass():
+    pass
+
+value1 = 10
+value2 = 20
+obj1 = Myclass()
+
+g = dict(globals())
+
+print("globals() => {}".format(g))
+
+
+#### 3) id()
+x = 10
+y = 10
+print("x의 타입 : {0}, x의 주소값 : {1}".format(type(x), hex(id(x))))
+print("y의 타입 : {0}, y의 주소값 : {1}".format(type(y), hex(id(y))))
+
+#### 4) isinstance(), issubclass()
+class Parent:
+    pass
+
+class Child(Parent):
+    pass
+
+p = Parent()
+c = Child()
+
+print("p객체는 Parent 클래스의 인스턴스입니까? {}".format(isinstance(p, Parent)))
+print("Child 클래스는 Parent 클래스의 서브클래스입니까? {}".format(issubclass(Child, Parent)))
+
+
+#----------------------------------------------------------------------------------------
+
+## 5. 실행관련 함수
+
+#### 1) eval()
+expr1 = "2 + 5 * 3"
+expr2 = "'Hello world'.upper()"
+
+print("{0} => {1}".format(expr1, eval(expr1)))
+print("{0} => {1}".format(expr2, eval(expr2)))
