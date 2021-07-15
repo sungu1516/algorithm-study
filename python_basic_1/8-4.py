@@ -8,7 +8,8 @@ def get_fibo(n):
 
 # 리스트로 출력
 list = []
-for i in range(0, input_number + 1):
+for i in range(1, input_number + 1):
     list.append(get_fibo(i))
+
 print(str(list))
 
