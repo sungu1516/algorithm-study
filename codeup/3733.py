@@ -15,8 +15,8 @@ def collas(n):
     else:
         return collas(n/2)
 
-max_num = num1
-max_len = collas(num1)
+max_num = 0
+max_len = 0
 
 for i in range(num1, num2 + 1):
     if max_len < collas(i):
