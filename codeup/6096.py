@@ -1,22 +1,28 @@
 # 6096 : [기초-리스트] 바둑알 십자 뒤집기
 
-# 바둑판과 같은 2차원 리스트 만들기
-badukpan = []
+# 입력받기
+
+# 2차원 배열 생성
+grid = []
+
 for _ in range(19):
-    inner_list = []
-    for _ in range(19):
-        inner_list.append(0)
-    badukpan.append(inner_list)
+    grid.append(list(map(int, input().split())))
 
-# 입력 받기
-number = int(input()) # 바둑알 개수
+# 좌표값 입력받기
+cnt = int(input())
+# 입력받은 횟수만큼 좌표를 받아, 코드 수행
+for _ in range(cnt):
+    y, x = map(int, input().split())
+    # 리스트 조작의 편의를 의해, 좌표값 변경
+    x, y = x - 1, y - 1
 
-for _ in range(number): # 위에서 입력받은 개수만큼 반복하며 특정 좌표에 1삽입
-    x, y = map(int, input().split(' '))
-    badukpan[x - 1][y - 1] = 1
+    # 반복문 통해 해당 좌표 기준으로 값 변경
+    # 가로줄 뒤집기
+    grid[y] = [int(not bool(stone)) for stone in grid[y]] 
+    # 세로줄 뒤집기
+    for a_list in grid:
+        a_list[x] = int(not bool(a_list[x]))
 
-# 출력
-for row in badukpan:
-    for el in row:
-        print(el, end = ' ')
-    print()
+
+for a_list in grid:
+    print(*a_list)
