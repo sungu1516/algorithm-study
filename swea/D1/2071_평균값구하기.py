@@ -4,11 +4,11 @@
 
 ## 풀이
 
-cnt = int(input())
+T = int(input())
 
-for i in range(1, cnt + 1):
+for i in range(1, T + 1):
     numbers = list(map(int, input().split()))
     total = sum(numbers)
     mean = round(total / len(numbers))
 
-    print(f'#{i} {mean}')
+    print('#{} {}'.format(i, mean))
