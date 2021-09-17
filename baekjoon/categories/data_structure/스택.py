@@ -1,5 +1,4 @@
 import sys
-input = sys.stdin.readline
 N = int(input())
 # 빈 스택 초기화
 stack = [0] * N     # 수행시간 단축 위해
