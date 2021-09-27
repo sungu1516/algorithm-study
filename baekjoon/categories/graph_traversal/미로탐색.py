@@ -28,11 +28,13 @@ def bfs(graph, start, visited):
                     return visited[curr[0]][curr[1]] + 1
                 visited[next_i][next_j] = visited[curr[0]][curr[1]] + 1
                 queue.append([next_i, next_j])
+    for row in graph:
+        print(*row)
 
 N, M = map(int, input().split())    # 도착 지점 입력받기
-graph = [[int(x) for x in input()] for _ in range(N)]    # 그래프 입력받기
+graph = [list(map(int, input().split())) for _ in range(N)]    # 그래프 입력받기
 
 visited = [[0]*M for _ in range(N)]       # 방문지점 초기화
 
 # bfs 실행
-print(bfs(graph, [0, 0], visited))
+bfs(graph, [0, 0], visited)
