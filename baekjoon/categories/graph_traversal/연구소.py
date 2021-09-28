@@ -1,44 +1,58 @@
 from collections import deque
-# 좌표가 유효한 범위 내에 있는지 확인하는 함수
-def is_valid(idx_i, idx_j):
-    if 0 <= idx_i < N and 0 <= idx_j < M:
-        return True
-    return False
+import copy
+import sys
+input = sys.stdin.readline
+
+# delta 탐색 - 우하좌상
+di = [0, 1, 0, -1]
+dj = [1, 0, -1, 0]
 
 # bsf 함수
-def bsf(start):
-    cnt = 0 # 바이러스가 정복한 빈칸 개수 초기화
-    visited = [[0] * M for _ in range(N)]     # 방문지점
-    queue = deque([start])  # 시작지점 queue 삽입
-    visited[start[0]][start[1]] = 1 # 시작지점 방문처리
+def bfs(new_graph):
+    global max_safe_area
+    queue = deque()  # 시작지점 queue 삽입
+
+    # 바이러스의 좌표 큐에 담기 & 방문처리
+    for i in range(N):
+        for j in range(M):
+            if graph[i][j] == 2:
+                queue.append((i,j))
 
     while queue:
         curr = queue.popleft()
-        cnt += 1    # 바이러스가 정복가능한 빈 공간의 개수를 count
         for i in range(4):
             n_i, n_j = curr[0] + di[i], curr[1] + dj[i]
-            if is_valid(n_i, n_j) and not visited[n_i][n_j]:    # 유효한 인덱스 범위 내에 있고 방문하지 않은 경우
-                if graph[n_i][n_j] == 0:    # 해당 영역이 빈 공간일 경우
+            if 0 <= n_i < N and 0 <= n_j < M  and new_graph[n_i][n_j] == 0:    # 유효한 인덱스 범위 내에 있는 경우
                     queue.append([n_i, n_j])
-                    visited[n_i][n_j] = 1
+                    new_graph[n_i][n_j] = 2  # 바이러스 감염
 
-    return cnt
+    safe_area = 0
+    for row in new_graph:
+        safe_area += row.count(0)
 
-di = [0, 1, 0, -1]  # 우하좌상
-dj = [1, 0, -1, 0]
+    if max_safe_area < safe_area:
+        max_safe_area = safe_area
+
+# 그래프에 벽을 설치한 후, 3개 설치 완료 시 bfs 를 통해 안전지대 최대값을 갱신
+def set_wall(cnt):
+
+    if cnt == 3: # 3개 설치한 경우
+        copied_graph = copy.deepcopy(graph)
+        bfs(copied_graph)  # 벽이 설치된 그래프를 넣는다.
+
+    else:
+        for i in range(N): # brute force
+            for j in range(M):
+                if graph[i][j] == 0: # 해당 구역이 0인 경우에
+                    graph[i][j] = 1 # 벽으로 선택
+                    set_wall(cnt+1) # 다음 벽 선택
+                    graph[i][j] = 0 # 되돌리기
+
 
 N, M = map(int, input().split())
 graph = [list(map(int, input().split())) for _ in range(N)]
+max_safe_area = 0
 
-# 벽 설치 위치 선정 - 조합 사용하여 brute force
-graph[0][1], graph[1][0], graph[3][5] = 1, 1, 1
+set_wall(0)
 
-# 함수 실행 - 바이러스가 전염된 영역의 수 구하기
-total = 0
-for i in range(N):
-    for j in range(M):
-        if graph[i][j] == 2:
-            start = [i, j]
-            total += bsf(start)
-
-print(total)
+print(max_safe_area)
