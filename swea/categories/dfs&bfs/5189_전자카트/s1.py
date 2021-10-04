@@ -1,23 +1,22 @@
 import sys
 sys.stdin = open('input.txt', 'r')
 
-def dfs(row, consum):
+def dfs(row,  consum):
     global min_consum
+
     if consum > min_consum:
         return
 
-    if row == N:
+    if visited.count(1) == N:
+        consum += arr[row][0]
         if consum < min_consum:
             min_consum = consum
-        return
 
     for i in range(N):
         if arr[row][i] != 0 and not visited[i]:
             visited[i] = 1
-            dfs(row+1, consum + arr[row][i])
+            dfs(i, consum + arr[row][i])
             visited[i] = 0
-
-
 
 T = int(input())
 for tc in range(1, T+1):
@@ -25,6 +24,7 @@ for tc in range(1, T+1):
     arr = [list(map(int, input().split())) for _ in range(N)]
 
     visited = [0] * N
+    visited[0] = 1
     min_consum = 100 * N
 
     dfs(0, 0)
