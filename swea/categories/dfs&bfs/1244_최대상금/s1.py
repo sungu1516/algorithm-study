@@ -19,6 +19,12 @@ def dfs(arr, idx, cnt):
                 dfs(arr, i, cnt+1)  # 자리이동했으므로 cnt ++ / i번째 자리까지 내림차순 정렬이 안되었으므로, i를 인자로 다시 넣어준다.
                 arr[i], arr[j] = arr[j], arr[i]     # 원상복구
 
+    # 내림차순으로 정렬 후에 변경 횟수가 남은 경우
+    if not max_reward and cnt < M:
+        if (M - cnt) % 2:  # 잔여 횟수가 홀수인 경우
+            arr[-1], arr[-2] = arr[-2], arr[-1]  # 마지막 두 자리를 교환
+        dfs(arr, idx, M)
+
 T = int(input())
 for tc in range(1, T+1):
     numbers, M = map(int, input().split())  # 숫자판, 교환횟수
