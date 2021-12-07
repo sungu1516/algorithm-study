@@ -36,7 +36,7 @@ for tc in range(1, T+1):
 
             arrival_time2 = []
             for person in group2:
-                time = abs(person[0] - exit2[0]) + abs(person[1] - exit2[1]) + 1
+                time = abs(person[0] - exit2[0]) + abs(person[1] -  exit2[1]) + 1
                 arrival_time2.append(time)
 
             # 특정 그룹의 마지막 사람의 완료시간을 구한다.
